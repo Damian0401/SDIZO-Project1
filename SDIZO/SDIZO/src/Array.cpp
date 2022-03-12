@@ -13,13 +13,7 @@ DS::Array<T>::~Array()
 }
 
 template<typename T>
-size_t DS::Array<T>::getSize()
-{
-	return this->size;
-}
-
-template<typename T>
-void DS::Array<T>::addFront(const T data)
+void DS::Array<T>::addFront(const T& data)
 {
 	T* newHead = new T[this->size + 1];
 	newHead[0] = data;
@@ -41,7 +35,7 @@ void DS::Array<T>::addFront(const T data)
 }
 
 template<typename T>
-void DS::Array<T>::addBack(const T data)
+void DS::Array<T>::addBack(const T& data)
 {
 	T* newHead = new T[this->size + 1];
 	newHead[this->size] = data;
@@ -63,9 +57,9 @@ void DS::Array<T>::addBack(const T data)
 }
 
 template<typename T>
-bool DS::Array<T>::addAt(const size_t index, T data)
+bool DS::Array<T>::addAt(const size_t& index, const T& data)
 {
-	// Check if index if correct
+	// Check if index is correct
 	if (index > this->size)
 	{
 		return false;
@@ -95,7 +89,7 @@ bool DS::Array<T>::addAt(const size_t index, T data)
 template<typename T>
 bool DS::Array<T>::removeFront()
 {
-	// Check if data exists
+	// Check if any data exists
 	if (this->head == nullptr)
 	{
 		return false;
@@ -147,10 +141,10 @@ bool DS::Array<T>::removeBack()
 }
 
 template<typename T>
-bool DS::Array<T>::removeAt(const size_t index)
+bool DS::Array<T>::removeAt(const size_t& index)
 {
-	// Check if data exists and index is correct
-	if (this->head == nullptr || index >= this->size)
+	// Check if index is correct
+	if (index >= this->size)
 	{
 		return false;
 	}
@@ -161,11 +155,14 @@ bool DS::Array<T>::removeAt(const size_t index)
 	if (this->size > 1)
 	{
 		newHead = new T[size - 1];
+
+		// Copy data before index
 		for (int i = 0; i < index; i++)
 		{
 			newHead[i] = this->head[i];
 		}
 
+		// Copy data after index
 		for (int i = index + 1; i < size; i++)
 		{
 			newHead[i - 1] = this->head[i];
@@ -187,7 +184,9 @@ void DS::Array<T>::print(std::ostream& out)
 		{
 			out << i << " -> " << this->head[i] << std::endl;
 		}
+		return;
 	}
+	out << "Data structure is empty" << std::endl;
 }
 
 // The only one data type necessary in this project

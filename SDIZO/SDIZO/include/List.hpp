@@ -1,15 +1,16 @@
 #pragma once
 
 #include <iostream>
+#include "ListNode.hpp"
 
 namespace DS
 {
 	template<typename T>
-	class Array
+	class List
 	{
 	public:
-		Array();
-		~Array();
+		List();
+		~List();
 		virtual void addFront(const T& data);
 		virtual void addBack(const  T& data);
 		virtual bool addAt(const size_t& index, const T& data);
@@ -18,7 +19,13 @@ namespace DS
 		virtual bool removeAt(const size_t& index);
 		virtual void print(std::ostream& out);
 	private:
-		T* head;
+		ListNode<T>* firstNode;
+		ListNode<T>* lastNode;
 		size_t size;
+		void createFirstNode(const T& data);
+		void addFromFront(const size_t& index, const T& data);
+		void addFromBack(const size_t& index, const T& data);
+		void removeFromFront(const size_t& index);
+		void removeFromBack(const size_t& index);
 	};
 }
