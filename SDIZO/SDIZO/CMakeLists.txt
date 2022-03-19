@@ -4,6 +4,6 @@
 cmake_minimum_required (VERSION 3.8)
 
 # Add source to this project's executable.
-add_executable (SDIZO   "main.cpp" "include/Array.hpp" "src/Array.cpp"  "include/ListNode.hpp" "include/List.hpp" "src/List.cpp")
+add_executable (SDIZO   "main.cpp" "include/Array.hpp" "src/Array.cpp"  "include/ListNode.hpp" "include/List.hpp" "src/List.cpp" "include/Heap.hpp" "src/Heap.cpp")
 
 # TODO: Add tests and install targets if needed.

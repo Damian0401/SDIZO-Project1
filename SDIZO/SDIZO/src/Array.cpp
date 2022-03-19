@@ -21,7 +21,7 @@ void DS::Array<T>::addFront(const T& data)
 	// Copy data if exists
 	if (this->head != nullptr)
 	{
-		for (int i = 0; i < this->size; i++)
+		for (size_t i = 0; i < this->size; i++)
 		{
 			newHead[i + 1] = this->head[i];
 		}
@@ -43,7 +43,7 @@ void DS::Array<T>::addBack(const T& data)
 	// Copy data if exists
 	if (this->head != nullptr)
 	{
-		for (int i = 0; i < this->size; i++)
+		for (size_t i = 0; i < this->size; i++)
 		{
 			newHead[i] = this->head[i];
 		}
@@ -69,13 +69,13 @@ bool DS::Array<T>::addAt(const size_t& index, const T& data)
 	newHead[index] = data;
 
 	// Copy elements before specific index
-	for (int i = 0; i < index; i++)
+	for (size_t i = 0; i < index; i++)
 	{
 		newHead[i] = this->head[i];
 	}
 
 	// Copy elements after specific index
-	for (int i = index + 1; i <= size; i++)
+	for (size_t i = index + 1; i <= size; i++)
 	{
 		newHead[i] = this->head[i - 1];
 	}
@@ -101,7 +101,7 @@ bool DS::Array<T>::removeFront()
 	if (this->size > 1)
 	{
 		newHead = new T[size - 1];
-		for (int i = 1; i < this->size; i++)
+		for (size_t i = 1; i < this->size; i++)
 		{
 			newHead[i - 1] = this->head[i];
 		}
@@ -129,7 +129,7 @@ bool DS::Array<T>::removeBack()
 	if (this->size >= 1)
 	{
 		newHead = new T[size];
-		for (int i = 0; i < this->size; i++)
+		for (size_t i = 0; i < this->size; i++)
 		{
 			newHead[i] = this->head[i];
 		}
@@ -157,13 +157,13 @@ bool DS::Array<T>::removeAt(const size_t& index)
 		newHead = new T[size - 1];
 
 		// Copy data before index
-		for (int i = 0; i < index; i++)
+		for (size_t i = 0; i < index; i++)
 		{
 			newHead[i] = this->head[i];
 		}
 
 		// Copy data after index
-		for (int i = index + 1; i < size; i++)
+		for (size_t i = index + 1; i < size; i++)
 		{
 			newHead[i - 1] = this->head[i];
 		}
@@ -180,7 +180,7 @@ void DS::Array<T>::print(std::ostream& out)
 {
 	if (this->size > 0 && this->head != nullptr)
 	{
-		for (int i = 0; i < this->size; i++)
+		for (size_t i = 0; i < this->size; i++)
 		{
 			out << i << " -> " << this->head[i] << std::endl;
 		}
