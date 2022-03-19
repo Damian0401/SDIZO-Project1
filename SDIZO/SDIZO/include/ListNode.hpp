@@ -1,6 +1,6 @@
 #pragma once
 
-namespace DS
+namespace SDIZO
 {
 	template<typename T>
 	struct ListNode

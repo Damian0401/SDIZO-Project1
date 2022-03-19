@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-namespace DS
+namespace SDIZO
 {
 	template<typename T>
 	class Array

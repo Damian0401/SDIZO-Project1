@@ -2,10 +2,10 @@
 #include <math.h>
 
 template<typename T>
-DS::Heap<T>::Heap() : head(nullptr), size(0) {}
+SDIZO::Heap<T>::Heap() : head(nullptr), size(0) {}
 
 template<typename T>
-DS::Heap<T>::~Heap()
+SDIZO::Heap<T>::~Heap()
 {
 	if (this->head != nullptr)
 	{
@@ -14,7 +14,7 @@ DS::Heap<T>::~Heap()
 }
 
 template<typename T>
-void DS::Heap<T>::add(const T& data)
+void SDIZO::Heap<T>::add(const T& data)
 {
 	T* newHead = new T[this->size + 1];
 	newHead[this->size] = data;
@@ -38,7 +38,7 @@ void DS::Heap<T>::add(const T& data)
 }
 
 template<typename T>
-void DS::Heap<T>::print(std::ostream& out)
+void SDIZO::Heap<T>::print(std::ostream& out)
 {
 	if (this->size > 0 && this->head != nullptr)
 	{
@@ -79,7 +79,7 @@ void DS::Heap<T>::print(std::ostream& out)
 }
 
 template<typename T>
-void DS::Heap<T>::correctHeap()
+void SDIZO::Heap<T>::correctHeap()
 {
 	size_t childIndex = this->size - 1;
 	size_t parentIndex = (childIndex - 1) / 2;
@@ -93,7 +93,7 @@ void DS::Heap<T>::correctHeap()
 }
 
 template<typename T>
-bool DS::Heap<T>::swapIfNeeded(size_t parentIndex, size_t childIndex)
+bool SDIZO::Heap<T>::swapIfNeeded(size_t parentIndex, size_t childIndex)
 {
 	if (this->head[childIndex] > this->head[parentIndex])
 	{
@@ -106,4 +106,4 @@ bool DS::Heap<T>::swapIfNeeded(size_t parentIndex, size_t childIndex)
 }
 
 // The only one data type necessary in this project
-template class DS::Heap<int>;
+template class SDIZO::Heap<int>;

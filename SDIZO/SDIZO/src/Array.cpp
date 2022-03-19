@@ -1,10 +1,10 @@
 #include "../include/Array.hpp"
 
 template <typename T>
-DS::Array<T>::Array() : head(nullptr), size(0) {}
+SDIZO::Array<T>::Array() : head(nullptr), size(0) {}
 
 template <typename T>
-DS::Array<T>::~Array()
+SDIZO::Array<T>::~Array()
 {
 	if (this->head != nullptr)
 	{
@@ -13,7 +13,7 @@ DS::Array<T>::~Array()
 }
 
 template<typename T>
-void DS::Array<T>::addFront(const T& data)
+void SDIZO::Array<T>::addFront(const T& data)
 {
 	T* newHead = new T[this->size + 1];
 	newHead[0] = data;
@@ -35,7 +35,7 @@ void DS::Array<T>::addFront(const T& data)
 }
 
 template<typename T>
-void DS::Array<T>::addBack(const T& data)
+void SDIZO::Array<T>::addBack(const T& data)
 {
 	T* newHead = new T[this->size + 1];
 	newHead[this->size] = data;
@@ -57,7 +57,7 @@ void DS::Array<T>::addBack(const T& data)
 }
 
 template<typename T>
-bool DS::Array<T>::addAt(const size_t& index, const T& data)
+bool SDIZO::Array<T>::addAt(const size_t& index, const T& data)
 {
 	// Check if index is correct
 	if (index > this->size)
@@ -87,7 +87,7 @@ bool DS::Array<T>::addAt(const size_t& index, const T& data)
 }
 
 template<typename T>
-bool DS::Array<T>::removeFront()
+bool SDIZO::Array<T>::removeFront()
 {
 	// Check if any data exists
 	if (this->head == nullptr)
@@ -114,7 +114,7 @@ bool DS::Array<T>::removeFront()
 }
 
 template<typename T>
-bool DS::Array<T>::removeBack()
+bool SDIZO::Array<T>::removeBack()
 {
 	// Check if any data exists
 	if (this->head == nullptr)
@@ -141,7 +141,7 @@ bool DS::Array<T>::removeBack()
 }
 
 template<typename T>
-bool DS::Array<T>::removeAt(const size_t& index)
+bool SDIZO::Array<T>::removeAt(const size_t& index)
 {
 	// Check if index is correct
 	if (index >= this->size)
@@ -176,7 +176,7 @@ bool DS::Array<T>::removeAt(const size_t& index)
 }
 
 template<typename T>
-void DS::Array<T>::print(std::ostream& out)
+void SDIZO::Array<T>::print(std::ostream& out)
 {
 	if (this->size > 0 && this->head != nullptr)
 	{
@@ -190,4 +190,4 @@ void DS::Array<T>::print(std::ostream& out)
 }
 
 // The only one data type necessary in this project
-template class DS::Array<int>;
+template class SDIZO::Array<int>;

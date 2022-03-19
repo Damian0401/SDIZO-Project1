@@ -3,7 +3,7 @@
 #include <iostream>
 #include "ListNode.hpp"
 
-namespace DS
+namespace SDIZO
 {
 	template<typename T>
 	class List

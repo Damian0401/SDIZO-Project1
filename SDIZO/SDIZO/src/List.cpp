@@ -1,11 +1,11 @@
 #include "../include/List.hpp"
 
 template<typename T>
-DS::List<T>::List() 
+SDIZO::List<T>::List()
 	: firstNode(nullptr), lastNode(nullptr), size(0) {}
 
 template<typename T>
-DS::List<T>::~List()
+SDIZO::List<T>::~List()
 {
 	ListNode<T>* currentNode = this->firstNode;
 
@@ -19,7 +19,7 @@ DS::List<T>::~List()
 }
 
 template<typename T>
-void DS::List<T>::addFront(const T& data)
+void SDIZO::List<T>::addFront(const T& data)
 {
 	// Create new node, if list is empty
 	if (this->size == 0)
@@ -36,7 +36,7 @@ void DS::List<T>::addFront(const T& data)
 }
 
 template<typename T>
-void DS::List<T>::addBack(const T& data)
+void SDIZO::List<T>::addBack(const T& data)
 {
 	// Create new node, if list is empty
 	if (this->size == 0)
@@ -53,7 +53,7 @@ void DS::List<T>::addBack(const T& data)
 }
 
 template<typename T>
-bool DS::List<T>::addAt(const size_t& index, const T& data)
+bool SDIZO::List<T>::addAt(const size_t& index, const T& data)
 {
 	// Check if index is correct
 	if (index > this->size)
@@ -90,7 +90,7 @@ bool DS::List<T>::addAt(const size_t& index, const T& data)
 }
 
 template<typename T>
-bool DS::List<T>::removeFront()
+bool SDIZO::List<T>::removeFront()
 {
 	// Check if any data exists
 	if (this->size == 0)
@@ -118,7 +118,7 @@ bool DS::List<T>::removeFront()
 }
 
 template<typename T>
-bool DS::List<T>::removeBack()
+bool SDIZO::List<T>::removeBack()
 {
 	// Check if any data exists
 	if (this->size == 0)
@@ -146,7 +146,7 @@ bool DS::List<T>::removeBack()
 }
 
 template<typename T>
-bool DS::List<T>::removeAt(const size_t& index)
+bool SDIZO::List<T>::removeAt(const size_t& index)
 {
 	// Check if index is correct
 	if (index >= this->size)
@@ -181,7 +181,7 @@ bool DS::List<T>::removeAt(const size_t& index)
 }
 
 template<typename T>
-void DS::List<T>::print(std::ostream& out)
+void SDIZO::List<T>::print(std::ostream& out)
 {
 	if (this->size > 0)
 	{
@@ -199,14 +199,14 @@ void DS::List<T>::print(std::ostream& out)
 }
 
 template<typename T>
-void DS::List<T>::createFirstNode(const T& data)
+void SDIZO::List<T>::createFirstNode(const T& data)
 {
 	this->firstNode = this->lastNode = new ListNode<T>(data, nullptr, nullptr);
 	this->size++;
 }
 
 template<typename T>
-void DS::List<T>::addFromFront(const size_t& index, const T& data)
+void SDIZO::List<T>::addFromFront(const size_t& index, const T& data)
 {
 	size_t currentIndex = 0;
 	ListNode<T>* currentNode = this->firstNode;
@@ -225,7 +225,7 @@ void DS::List<T>::addFromFront(const size_t& index, const T& data)
 }
 
 template<typename T>
-void DS::List<T>::addFromBack(const size_t& index, const T& data)
+void SDIZO::List<T>::addFromBack(const size_t& index, const T& data)
 {
 	size_t currentIndex = this->size - 1;
 	ListNode<T>* currentNode = this->lastNode;
@@ -244,7 +244,7 @@ void DS::List<T>::addFromBack(const size_t& index, const T& data)
 }
 
 template<typename T>
-void DS::List<T>::removeFromFront(const size_t& index)
+void SDIZO::List<T>::removeFromFront(const size_t& index)
 {
 	size_t currentIndex = 0;
 	ListNode<T>* currentNode = this->firstNode;
@@ -265,7 +265,7 @@ void DS::List<T>::removeFromFront(const size_t& index)
 }
 
 template<typename T>
-void DS::List<T>::removeFromBack(const size_t& index)
+void SDIZO::List<T>::removeFromBack(const size_t& index)
 {
 	size_t currentIndex = this->size - 1;
 	ListNode<T>* currentNode = this->lastNode;
@@ -286,4 +286,4 @@ void DS::List<T>::removeFromBack(const size_t& index)
 }
 
 // The only one data type necessary in this project
-template class DS::List<int>;
+template class SDIZO::List<int>;
