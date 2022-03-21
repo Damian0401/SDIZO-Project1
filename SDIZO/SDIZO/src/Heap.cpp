@@ -38,6 +38,39 @@ void SDIZO::Heap<T>::add(const T& data)
 }
 
 template<typename T>
+bool SDIZO::Heap<T>::removeRoot()
+{
+	// Check if heap is not empty
+	if (this->size == 0)
+	{
+		return false;
+	}
+
+	this->size--;
+	T* newHead = nullptr;
+
+	if (this->size > 0)
+	{
+		newHead = new T[this->size];
+
+		// Set the last element of the heap as new root
+		newHead[0] = this->head[this->size];
+
+		// Copy existing data
+		for (int i = 1; i < this->size; i++)
+		{
+			newHead[i] = this->head[i];
+		}
+	}
+
+	delete[] this->head;
+	this->head = newHead;
+	this->maxHeapify(0);
+
+	return true;
+}
+
+template<typename T>
 void SDIZO::Heap<T>::print(std::ostream& out)
 {
 	if (this->size > 0 && this->head != nullptr)
@@ -95,6 +128,13 @@ void SDIZO::Heap<T>::correctHeap()
 template<typename T>
 bool SDIZO::Heap<T>::swapIfNeeded(size_t parentIndex, size_t childIndex)
 {
+	// Check if heap is not empty
+	if (this->size == 0)
+	{
+		return false;
+	}
+
+	// Swap index if needed
 	if (this->head[childIndex] > this->head[parentIndex])
 	{
 		T value = this->head[parentIndex];
@@ -103,6 +143,32 @@ bool SDIZO::Heap<T>::swapIfNeeded(size_t parentIndex, size_t childIndex)
 		return true;
 	}
 	return false;
+}
+
+template<typename T>
+void SDIZO::Heap<T>::maxHeapify(size_t index)
+{
+	size_t left = index * 2 + 1;
+	size_t right = (index + 1) * 2;
+	size_t largest = index;
+
+	// Check if left child is greater than parent
+	if (left < this->size && this->head[left] > this->head[largest])
+	{
+		largest = left;
+	}
+
+	// Check if right child is greater than parent
+	if (right < this->size && this->head[right] > this->head[largest])
+	{
+		largest = right;
+	}
+
+	bool swapped = this->swapIfNeeded(index, largest);
+	if (swapped)
+	{
+		this->maxHeapify(largest);
+	}
 }
 
 // The only one data type necessary in this project
