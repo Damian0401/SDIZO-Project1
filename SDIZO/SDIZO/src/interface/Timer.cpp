@@ -1,4 +1,4 @@
-#include "../include/Timer.hpp"
+#include "../../include/interface/Timer.hpp"
 
 void SDIZO::Timer::start()
 {
