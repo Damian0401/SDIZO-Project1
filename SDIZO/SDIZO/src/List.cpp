@@ -199,6 +199,12 @@ void SDIZO::List<T>::print(std::ostream& out)
 }
 
 template<typename T>
+size_t SDIZO::List<T>::getSize()
+{
+	return this->size;
+}
+
+template<typename T>
 void SDIZO::List<T>::createFirstNode(const T& data)
 {
 	this->firstNode = this->lastNode = new ListNode<T>(data, nullptr, nullptr);

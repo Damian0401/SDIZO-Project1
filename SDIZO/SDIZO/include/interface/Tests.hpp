@@ -7,10 +7,19 @@ namespace SDIZO
 	class Tests
 	{
 	public:
-		Tests(std::ostream& output);
+		Tests(std::string baseSourcePath, std::string baseResultsPath);
 		~Tests();
+		void manualArrayTest();
+		void automaticArrayTest();
+		void manualListTest();
+		void automaticListTest();
+		void manualHeapTest();
+		void automaticHeapTest();
+		void manualTreeTest();
+		void automaticTreeTest();
 	private:
-		std::ostream& output;
 		SDIZO::Timer* timer;
+		std::string baseSourcePath;
+		std::string baseResultsPath;
 	};
 }

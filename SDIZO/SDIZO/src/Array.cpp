@@ -189,5 +189,11 @@ void SDIZO::Array<T>::print(std::ostream& out)
 	out << "Data structure is empty" << std::endl;
 }
 
+template<typename T>
+size_t SDIZO::Array<T>::getSize()
+{
+	return this->size;
+}
+
 // The only one data type necessary in this project
 template class SDIZO::Array<int>;

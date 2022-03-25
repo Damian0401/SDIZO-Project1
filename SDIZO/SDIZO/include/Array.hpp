@@ -17,6 +17,7 @@ namespace SDIZO
 		virtual bool removeBack();
 		virtual bool removeAt(const size_t& index);
 		virtual void print(std::ostream& out);
+		virtual size_t getSize();
 	private:
 		T* head;
 		size_t size;

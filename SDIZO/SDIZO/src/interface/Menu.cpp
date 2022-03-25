@@ -1,9 +1,8 @@
 #include "../../include/interface/Menu.hpp"
 
-SDIZO::Menu::Menu(std::ostream& menuOstream,
-	std::istream& menuIstream, std::ostream& testsOstream) 
-		: tests(new Tests(testsOstream)), output(menuOstream),
-		input(menuIstream) {}
+SDIZO::Menu::Menu(std::string baseSourcePath,
+	std::string baseResultsPath)
+	: tests(new Tests(baseSourcePath, baseResultsPath)) {}
 
 SDIZO::Menu::~Menu()
 {
@@ -20,10 +19,7 @@ void SDIZO::Menu::run()
 
 	while (!isFinished)
 	{
-		this->output << std::string(50, '#') << std::endl;
-		this->output << "Select option:" << std::endl;
-		this->input >> selectedOption;
-
+		selectedOption = this->getSelectedOption(MessageType::MainMenu);
 		switch (selectedOption)
 		{
 		case 1:
@@ -39,8 +35,10 @@ void SDIZO::Menu::run()
 			this->runTreeTests();
 			break;
 		case 0:
-		default:
 			isFinished = true;
+			break;
+		default:
+			std::cout << "Invalid value" << std::endl;
 			break;
 		}
 	}
@@ -48,20 +46,104 @@ void SDIZO::Menu::run()
 
 void SDIZO::Menu::runArrayTests()
 {
-	this->output << "There will be array tests implementation" << std::endl;
+	int selectedOption = this->getSelectedOption(MessageType::TestTypeMenu);
+	switch (selectedOption)
+	{
+	case 1:
+		this->tests->manualArrayTest();
+		break;
+	case 2:
+		this->tests->automaticArrayTest();
+		break;
+	default:
+		std::cout << "Invalid value" << std::endl;
+		break;
+	}
 }
 
 void SDIZO::Menu::runListTests()
 {
-	this->output << "There will be list tests implementation" << std::endl;
+	int selectedOption = this->getSelectedOption(MessageType::TestTypeMenu);
+	switch (selectedOption)
+	{
+	case 1:
+		this->tests->manualListTest();
+		break;
+	case 2:
+		this->tests->automaticListTest();
+		break;
+	default:
+		std::cout << "Invalid value" << std::endl;
+		break;
+	}
 }
 
 void SDIZO::Menu::runHeapTests()
 {
-	this->output << "There will be heap tests implementation" << std::endl;
+	int selectedOption = this->getSelectedOption(MessageType::TestTypeMenu);
+	switch (selectedOption)
+	{
+	case 1:
+		this->tests->manualHeapTest();
+		break;
+	case 2:
+		this->tests->automaticHeapTest();
+		break;
+	default:
+		std::cout << "Invalid value" << std::endl;
+		break;
+	}
 }
 
 void SDIZO::Menu::runTreeTests()
 {
-	this->output << "There will be tree tests implementation" << std::endl;
+	int selectedOption = this->getSelectedOption(MessageType::TestTypeMenu);
+	switch (selectedOption)
+	{
+	case 1:
+		this->tests->manualTreeTest();
+		break;
+	case 2:
+		this->tests->automaticTreeTest();
+		break;
+	default:
+		std::cout << "Invalid value" << std::endl;
+		break;
+	}
+}
+
+int SDIZO::Menu::getSelectedOption(MessageType messageType)
+{
+	int option = -1;
+	std::cout << "Select option:" << std::endl;
+	this->printMessage(messageType);
+	std::cin >> option;
+	std::cout << std::string(50, '#') << std::endl;
+	if (std::cin.fail())
+	{
+		std::cin.clear();
+		std::cin.ignore();
+		return -1;
+	}
+	return option;
+}
+
+void SDIZO::Menu::printMessage(MessageType messageType)
+{
+	switch (messageType)
+	{
+	case MessageType::MainMenu:
+		std::cout << "1 <- Tests for array" << std::endl;
+		std::cout << "2 <- Tests for list" << std::endl;
+		std::cout << "3 <- Tests for heap" << std::endl;
+		std::cout << "4 <- Tests for tree" << std::endl;
+		std::cout << "0 <- Exit" << std::endl;
+		break;
+	case MessageType::TestTypeMenu:
+		std::cout << "1 <- Manual tests" << std::endl;
+		std::cout << "2 <- Automatic tests" << std::endl;
+		break;
+	default:
+		break;
+	}
 }
