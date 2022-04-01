@@ -18,7 +18,7 @@ namespace SDIZO
 		void runListTests();
 		void runHeapTests();
 		void runTreeTests();
-		int getSelectedOption(MessageType messageType);
-		void printMessage(MessageType messageType);
+		int getSelectedOption(MenuMessageType messageType);
+		void printMessage(MenuMessageType messageType);
 	};
 }

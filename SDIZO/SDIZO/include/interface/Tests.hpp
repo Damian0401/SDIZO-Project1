@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include "Timer.hpp"
+#include "Enums.hpp"
 
 namespace SDIZO
 {
@@ -21,5 +22,7 @@ namespace SDIZO
 		SDIZO::Timer* timer;
 		std::string baseSourcePath;
 		std::string baseResultsPath;
+		int getSelected(std::string header, TestsMessageType messageType);
+		void printMessage(TestsMessageType messageType);
 	};
 }

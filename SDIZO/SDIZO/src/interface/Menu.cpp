@@ -19,7 +19,7 @@ void SDIZO::Menu::run()
 
 	while (!isFinished)
 	{
-		selectedOption = this->getSelectedOption(MessageType::MainMenu);
+		selectedOption = this->getSelectedOption(MenuMessageType::MainMenu);
 		switch (selectedOption)
 		{
 		case 1:
@@ -46,7 +46,7 @@ void SDIZO::Menu::run()
 
 void SDIZO::Menu::runArrayTests()
 {
-	int selectedOption = this->getSelectedOption(MessageType::TestTypeMenu);
+	int selectedOption = this->getSelectedOption(MenuMessageType::TestTypeMenu);
 	switch (selectedOption)
 	{
 	case 1:
@@ -63,7 +63,7 @@ void SDIZO::Menu::runArrayTests()
 
 void SDIZO::Menu::runListTests()
 {
-	int selectedOption = this->getSelectedOption(MessageType::TestTypeMenu);
+	int selectedOption = this->getSelectedOption(MenuMessageType::TestTypeMenu);
 	switch (selectedOption)
 	{
 	case 1:
@@ -80,7 +80,7 @@ void SDIZO::Menu::runListTests()
 
 void SDIZO::Menu::runHeapTests()
 {
-	int selectedOption = this->getSelectedOption(MessageType::TestTypeMenu);
+	int selectedOption = this->getSelectedOption(MenuMessageType::TestTypeMenu);
 	switch (selectedOption)
 	{
 	case 1:
@@ -97,7 +97,7 @@ void SDIZO::Menu::runHeapTests()
 
 void SDIZO::Menu::runTreeTests()
 {
-	int selectedOption = this->getSelectedOption(MessageType::TestTypeMenu);
+	int selectedOption = this->getSelectedOption(MenuMessageType::TestTypeMenu);
 	switch (selectedOption)
 	{
 	case 1:
@@ -112,7 +112,7 @@ void SDIZO::Menu::runTreeTests()
 	}
 }
 
-int SDIZO::Menu::getSelectedOption(MessageType messageType)
+int SDIZO::Menu::getSelectedOption(MenuMessageType messageType)
 {
 	int option = -1;
 	std::cout << "Select option:" << std::endl;
@@ -128,18 +128,18 @@ int SDIZO::Menu::getSelectedOption(MessageType messageType)
 	return option;
 }
 
-void SDIZO::Menu::printMessage(MessageType messageType)
+void SDIZO::Menu::printMessage(MenuMessageType messageType)
 {
 	switch (messageType)
 	{
-	case MessageType::MainMenu:
+	case SDIZO::MenuMessageType::MainMenu:
 		std::cout << "1 <- Tests for array" << std::endl;
 		std::cout << "2 <- Tests for list" << std::endl;
 		std::cout << "3 <- Tests for heap" << std::endl;
 		std::cout << "4 <- Tests for tree" << std::endl;
 		std::cout << "0 <- Exit" << std::endl;
 		break;
-	case MessageType::TestTypeMenu:
+	case SDIZO::MenuMessageType::TestTypeMenu:
 		std::cout << "1 <- Manual tests" << std::endl;
 		std::cout << "2 <- Automatic tests" << std::endl;
 		break;
