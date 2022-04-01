@@ -7,4 +7,10 @@ namespace SDIZO
 		MainMenu,
 		TestTypeMenu,
 	};
+
+	enum class Color
+	{
+		Red,
+		Black
+	};
 }
