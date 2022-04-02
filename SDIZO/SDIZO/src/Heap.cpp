@@ -97,7 +97,7 @@ void SDIZO::Heap<T>::print(std::ostream& out)
 				}
 				out << '[' << this->head[i] << ']' << std::string(space * 3, ' ');
 			}
-			out << std::endl;
+			out << "\n\n";
 
 			// Change indexes or last and first node on each heap level
 			first = last;

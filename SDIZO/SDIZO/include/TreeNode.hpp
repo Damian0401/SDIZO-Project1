@@ -14,7 +14,8 @@ namespace SDIZO
 		Color color;
 		TreeNode(T value, TreeNode* parent, TreeNode* left, 
 			TreeNode* right, Color color)
-			: value(value), parent(parent),
-			left(left), right(right) {};
+			: value(value), parent(parent),	left(left), 
+			right(right), color(color) {};
+		TreeNode() {};
 	};
 }
