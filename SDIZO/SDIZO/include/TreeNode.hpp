@@ -16,6 +16,7 @@ namespace SDIZO
 			TreeNode* right, Color color)
 			: value(value), parent(parent),	left(left), 
 			right(right), color(color) {};
-		TreeNode() {};
+		TreeNode() : value(-1), parent(nullptr), left(nullptr), 
+			right(nullptr), color(Color::Red) {};
 	};
 }
