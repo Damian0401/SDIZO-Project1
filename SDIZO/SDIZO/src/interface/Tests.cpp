@@ -228,7 +228,52 @@ void SDIZO::Tests::automaticHeapTest()
 
 void SDIZO::Tests::manualTreeTest()
 {
-	std::cout << "TODO" << std::endl;
+	Tree<int>* testTree = new Tree<int>();
+	bool isRunning = true;
+	int data = -1;
+	bool success = true;
+
+	while (isRunning)
+	{
+		std::cout << std::endl;
+		testTree->print(std::cout);
+		std::cout << std::endl;
+
+		data = this->getSelected("Select option", TestsMessageType::ManualTreeTestMenu);
+
+		switch (data)
+		{
+		case 1:
+			data = this->getSelected("Enter data", TestsMessageType::None);
+			this->timer->start();
+			testTree->add(data);
+			this->timer->stop();
+			break;
+		case 2:
+			data = this->getSelected("Enter data", TestsMessageType::None);
+			this->timer->start();
+			success = testTree->remove(data);
+			this->timer->stop();
+			break;
+		case 0:
+			isRunning = false;
+			break;
+		default:
+			std::cout << "Invalid option" << std::endl;
+			break;
+		}
+
+		if (!success)
+		{
+			std::cout << "Operation failed" << std::endl;
+			success = true;
+		}
+
+		std::cout << "Elapsed time: " << this->timer->getTime()
+			<< "ns" << std::endl;
+	}
+
+	delete testTree;
 }
 
 void SDIZO::Tests::automaticTreeTest()
@@ -273,6 +318,9 @@ void SDIZO::Tests::printMessage(TestsMessageType messageType)
 		std::cout << "0 <- [exit]" << std::endl;
 		break;
 	case SDIZO::TestsMessageType::ManualTreeTestMenu:
+		std::cout << "1 <- add" << std::endl;
+		std::cout << "2 <- remove" << std::endl;
+		std::cout << "0 <- [exit]" << std::endl;
 		break;
 	case SDIZO::TestsMessageType::AutomaticArrayTestMenu:
 		break;
