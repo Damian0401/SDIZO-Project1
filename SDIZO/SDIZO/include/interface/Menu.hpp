@@ -1,7 +1,6 @@
 #pragma once
-
-#include "Tests.hpp"
-#include "Enums.hpp"
+#include "ManualTests.hpp"
+#include "AutomaticTests.hpp"
 
 namespace SDIZO
 {
@@ -13,7 +12,8 @@ namespace SDIZO
 		~Menu();
 		void run();
 	private:
-		Tests* tests;
+		ManualTests* manualTests;
+		AutomaticTests* automaticTests;
 		void runArrayTests();
 		void runListTests();
 		void runHeapTests();

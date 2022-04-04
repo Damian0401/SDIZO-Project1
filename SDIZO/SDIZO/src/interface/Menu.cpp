@@ -2,13 +2,19 @@
 
 SDIZO::Menu::Menu(std::string baseSourcePath,
 	std::string baseResultsPath)
-	: tests(new Tests(baseSourcePath, baseResultsPath)) {}
+	: manualTests(new ManualTests(baseSourcePath, baseResultsPath)),
+	automaticTests(new AutomaticTests(baseSourcePath, baseResultsPath)) {}
 
 SDIZO::Menu::~Menu()
 {
-	if (this->tests != nullptr)
+	if (this->manualTests != nullptr)
 	{
-		delete this->tests;
+		delete this->manualTests;
+	}
+
+	if (this->automaticTests != nullptr)
+	{
+		delete this->automaticTests;
 	}
 }
 
@@ -50,10 +56,10 @@ void SDIZO::Menu::runArrayTests()
 	switch (selectedOption)
 	{
 	case 1:
-		this->tests->manualArrayTest();
+		this->manualTests->arrayTest();
 		break;
 	case 2:
-		this->tests->automaticArrayTest();
+		this->automaticTests->arrayTest();
 		break;
 	default:
 		std::cout << "Invalid value" << std::endl;
@@ -67,10 +73,10 @@ void SDIZO::Menu::runListTests()
 	switch (selectedOption)
 	{
 	case 1:
-		this->tests->manualListTest();
+		this->manualTests->listTest();
 		break;
 	case 2:
-		this->tests->automaticListTest();
+		this->automaticTests->listTest();
 		break;
 	default:
 		std::cout << "Invalid value" << std::endl;
@@ -84,10 +90,10 @@ void SDIZO::Menu::runHeapTests()
 	switch (selectedOption)
 	{
 	case 1:
-		this->tests->manualHeapTest();
+		this->manualTests->heapTest();
 		break;
 	case 2:
-		this->tests->automaticHeapTest();
+		this->automaticTests->heapTest();
 		break;
 	default:
 		std::cout << "Invalid value" << std::endl;
@@ -101,10 +107,10 @@ void SDIZO::Menu::runTreeTests()
 	switch (selectedOption)
 	{
 	case 1:
-		this->tests->manualTreeTest();
+		this->manualTests->treeTest();
 		break;
 	case 2:
-		this->tests->automaticTreeTest();
+		this->automaticTests->treeTest();
 		break;
 	default:
 		std::cout << "Invalid value" << std::endl;

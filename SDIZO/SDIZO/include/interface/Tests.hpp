@@ -12,15 +12,12 @@ namespace SDIZO
 	public:
 		Tests(std::string baseSourcePath, std::string baseResultsPath);
 		~Tests();
-		void manualArrayTest();
-		void automaticArrayTest();
-		void manualListTest();
-		void automaticListTest();
-		void manualHeapTest();
-		void automaticHeapTest();
-		void manualTreeTest();
-		void automaticTreeTest();
-	private:
+		virtual void arrayTest() = 0;
+		virtual void listTest() = 0;
+		virtual void heapTest() = 0;
+		virtual void treeTest() = 0;
+
+	protected:
 		SDIZO::Timer* timer;
 		std::string baseSourcePath;
 		std::string baseResultsPath;
