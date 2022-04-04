@@ -173,10 +173,12 @@ bool SDIZO::List<T>::removeAt(const size_t& index)
 	if (index < middleIndex)
 	{
 		this->removeFromFront(index);
+		this->size--;
 		return true;
 	}
 
 	this->removeFromBack(index);
+	this->size--;
 	return true;
 }
 

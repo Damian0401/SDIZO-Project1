@@ -3,8 +3,8 @@
 
 int main()
 {
-	std::string sourcePath = "C:/put/here/absolute/path/to/source/directory";
-	std::string resultsPath = "C:/put/here/absolute/path/to/results/directory";
+	std::string sourcePath = "C:/Users/szkol/Desktop/SDIZO/projekt/SDIZO-Project1/SDIZO/SDIZO/data/";
+	std::string resultsPath = "C:/Users/szkol/Desktop/SDIZO/projekt/SDIZO-Project1/SDIZO/SDIZO/results/";
 	SDIZO::Menu* menu = new SDIZO::Menu(sourcePath, resultsPath);
 	menu->run();
 }

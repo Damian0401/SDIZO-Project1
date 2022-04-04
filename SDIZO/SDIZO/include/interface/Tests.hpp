@@ -1,5 +1,7 @@
 #pragma once
 #include <iostream>
+#include <fstream>
+#include <tuple>
 #include "Timer.hpp"
 #include "Enums.hpp"
 
@@ -24,5 +26,6 @@ namespace SDIZO
 		std::string baseResultsPath;
 		int getSelected(std::string header, TestsMessageType messageType);
 		void printMessage(TestsMessageType messageType);
+		std::tuple<int*, int> getDataFromFile(std::string fileName);
 	};
 }
