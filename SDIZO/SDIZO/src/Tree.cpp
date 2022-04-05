@@ -131,7 +131,65 @@ void SDIZO::Tree<T>::add(const T& data)
 template<typename T>
 bool SDIZO::Tree<T>::remove(const T& data)
 {
-	return false;
+	TreeNode<T>* nodeToRemove = this->findNode(data, this->root);
+
+	// Check if node with wanted key exists
+	if (nodeToRemove == nullptr)
+	{
+		return false;
+	}
+
+	TreeNode<T>* helperOne;
+	TreeNode<T>* helperTwo;
+
+	if (nodeToRemove->left == this->guard
+		|| nodeToRemove->right == this->guard)
+	{
+		helperOne = nodeToRemove;
+	}
+	else
+	{
+		helperOne = this->successor(nodeToRemove);
+	}
+
+	if (helperOne->left != this->guard)
+	{
+		helperTwo = helperOne->left;
+	}
+	else
+	{
+		helperTwo = helperOne->right;
+	}
+
+	helperTwo->parent = helperOne->parent;
+
+	if (helperOne->parent == this->guard)
+	{
+		this->root = helperTwo;
+	}
+	else
+	{
+		if (helperOne == helperOne->parent->left)
+		{
+			helperOne->parent->left = helperTwo;
+		}
+		else
+		{
+			helperOne->parent->right = helperTwo;
+		}
+	}
+
+	if (helperOne != nodeToRemove)
+	{
+		nodeToRemove->value = helperOne->value;
+	}
+
+	if (helperOne->color == Color::Black)
+	{
+		this->deleteFixUp(helperTwo);
+	}
+
+	return true;
 }
 
 template<typename T>
@@ -154,7 +212,7 @@ void SDIZO::Tree<T>::print(std::ostream& out)
 		}
 
 		// Place nodes inside table
-		placeNode(this->root, table, 0);
+		placeNodes(this->root, table, 0);
 
 		// Get handler for console manipulation
 		HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -213,6 +271,60 @@ void SDIZO::Tree<T>::print(std::ostream& out)
 		return;
 	}
 	out << "Data structure is empty" << std::endl;
+}
+
+template<typename T>
+SDIZO::TreeNode<T>* SDIZO::Tree<T>::successor(TreeNode<T>* node)
+{
+	// Check if right child exists
+	if (node->right != this->guard)
+	{
+		return this->minumum(node->right);
+	}
+
+	TreeNode<T>* helper = node->parent;
+	while (helper != this->guard && node == helper->right)
+	{
+		node = helper;
+		helper = helper->parent;
+	}
+	return helper;
+}
+
+template<typename T>
+SDIZO::TreeNode<T>* SDIZO::Tree<T>::minumum(TreeNode<T>* node)
+{
+	// Loop while left child exists
+	while (node->left != this->guard)
+	{
+		node = node->right;
+	}
+	return node;
+}
+
+template<typename T>
+SDIZO::TreeNode<T>* SDIZO::Tree<T>::findNode(const T& data, TreeNode<T>* node)
+{
+	// Check if node exists
+	if (node == this->guard)
+	{
+		return nullptr;
+	}
+
+	// Check if node store wanted value
+	if (data == node->value)
+	{
+		return node;
+	}
+
+	// Look for node in the right branch of tree
+	if (data > node->value)
+	{
+		return findNode(data, node->right);
+	}
+
+	// Look for node in the left branch of tree
+	return findNode(data, node->left);
 }
 
 template<typename T>
@@ -298,6 +410,80 @@ void SDIZO::Tree<T>::rightRotation(TreeNode<T>* node)
 }
 
 template<typename T>
+void SDIZO::Tree<T>::deleteFixUp(TreeNode<T>* node)
+{
+	TreeNode<T>* helper;
+
+	// Fix tree structure and node colors
+	while (node != this->root && node->color == Color::Black)
+	{
+		if (node == node->parent->left)
+		{
+			helper = node->parent->right;
+
+			if (helper->color == Color::Red)
+			{
+				helper->color = Color::Black;
+				node->parent->color = Color::Red;
+				this->leftRotation(node->parent);
+				helper = node->parent->right;
+			}
+
+			if (helper->left->color == Color::Black
+				&& helper->right->color == Color::Black)
+			{
+				helper->color = Color::Red;
+				node = node->parent;
+			}
+			else if (helper->right->color == Color::Black)
+			{
+				helper->left->color = Color::Black;
+				helper->color = Color::Red;
+				this->rightRotation(helper);
+				helper = node->parent->right;
+			}
+			helper->color = helper->parent->color;
+			node->parent->color = Color::Black;
+			helper->right->color = Color::Black;
+			this->leftRotation(node->parent);
+			node = this->root;
+		}
+		else
+		{
+			helper = node->parent->left;
+
+			if (helper->color == Color::Red)
+			{
+				helper->color = Color::Black;
+				node->parent->color = Color::Red;
+				this->rightRotation(node->parent);
+				helper = node->parent->left;
+			}
+
+			if (helper->right->color == Color::Black
+				&& helper->left->color == Color::Black)
+			{
+				helper->color = Color::Red;
+				node = node->parent;
+			}
+			else if (helper->left->color == Color::Black)
+			{
+				helper->right->color = Color::Black;
+				helper->color = Color::Red;
+				this->leftRotation(helper);
+				helper = node->parent->left;
+			}
+			helper->color = helper->parent->color;
+			node->parent->color = Color::Black;
+			helper->left->color = Color::Black;
+			this->rightRotation(node->parent);
+			node = this->root;
+		}
+	}
+	node->color = Color::Black;
+}
+
+template<typename T>
 void SDIZO::Tree<T>::deleteNodes(TreeNode<T>* node)
 {
 	// Check if current node is not the guardian
@@ -335,7 +521,7 @@ void SDIZO::Tree<T>::calculateDepth(SDIZO::TreeNode<T>* node, size_t& maxDepth, 
 }
 
 template<typename T>
-void SDIZO::Tree<T>::placeNode(SDIZO::TreeNode<T>* node, SDIZO::TreeNode<T>** table, size_t index)
+void SDIZO::Tree<T>::placeNodes(SDIZO::TreeNode<T>* node, SDIZO::TreeNode<T>** table, size_t index)
 {
 	// Place node in table
 	table[index] = node;
@@ -343,13 +529,13 @@ void SDIZO::Tree<T>::placeNode(SDIZO::TreeNode<T>* node, SDIZO::TreeNode<T>** ta
 	// Check if exists left child
 	if (node->left != this->guard)
 	{
-		placeNode(node->left, table, 2 * index + 1);
+		placeNodes(node->left, table, 2 * index + 1);
 	}
 
 	// Check if exists right child
 	if (node->right != this->guard)
 	{
-		placeNode(node->right, table, 2 * index + 2);
+		placeNodes(node->right, table, 2 * index + 2);
 	}
 }
 
