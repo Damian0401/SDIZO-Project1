@@ -189,12 +189,92 @@ void SDIZO::AutomaticTests::listTest()
 
 void SDIZO::AutomaticTests::heapTest()
 {
-	std::cout << "TODO" << std::endl;
+	int dataSize;
+	int* dataFromFile;
+	std::string fileName;
+
+	std::cout << "Enter filename: ";
+	std::cin >> fileName;
+
+	std::tie(dataFromFile, dataSize) = this->getDataFromFile(fileName);
+
+	if (dataFromFile == nullptr)
+	{
+		std::cout << "Unable to read data" << std::endl;
+		return;
+	}
+
+	Heap<int>* systemUnderTest = new Heap<int>();
+
+	std::ofstream addResultFile(this->baseResultsPath + "heap/add-" + fileName);
+	for (size_t i = 0; i < dataSize; i++)
+	{
+		this->timer->start();
+		systemUnderTest->add(dataFromFile[i]);
+		this->timer->stop();
+		addResultFile << this->timer->getTime() << std::endl;
+	}
+	addResultFile.close();
+
+	std::ofstream removeRootResultFile(this->baseResultsPath + "heap/removeRoot-" + fileName);
+	for (size_t i = 0; i < dataSize; i++)
+	{
+		this->timer->start();
+		systemUnderTest->removeRoot();
+		this->timer->stop();
+		removeRootResultFile << this->timer->getTime() << std::endl;
+	}
+	removeRootResultFile.close();
+
+	std::cout << "Succeeded" << std::endl;
+
+	delete systemUnderTest;
+	delete[] dataFromFile;
 }
 
 
 
 void SDIZO::AutomaticTests::treeTest()
 {
-	std::cout << "TODO" << std::endl;
+	int dataSize;
+	int* dataFromFile;
+	std::string fileName;
+
+	std::cout << "Enter filename: ";
+	std::cin >> fileName;
+
+	std::tie(dataFromFile, dataSize) = this->getDataFromFile(fileName);
+
+	if (dataFromFile == nullptr)
+	{
+		std::cout << "Unable to read data" << std::endl;
+		return;
+	}
+
+	Tree<int>* systemUnderTest = new Tree<int>();
+
+	std::ofstream addResultFile(this->baseResultsPath + "tree/add-" + fileName);
+	for (size_t i = 0; i < dataSize; i++)
+	{
+		this->timer->start();
+		systemUnderTest->add(dataFromFile[i]);
+		this->timer->stop();
+		addResultFile << this->timer->getTime() << std::endl;
+	}
+	addResultFile.close();
+
+	std::ofstream removeResultFile(this->baseResultsPath + "tree/remove-" + fileName);
+	for (size_t i = 0; i < dataSize; i++)
+	{
+		this->timer->start();
+		systemUnderTest->remove(dataFromFile[i]);
+		this->timer->stop();
+		removeResultFile << this->timer->getTime() << std::endl;
+	}
+	removeResultFile.close();
+
+	std::cout << "Succeeded" << std::endl;
+
+	delete systemUnderTest;
+	delete[] dataFromFile;
 }

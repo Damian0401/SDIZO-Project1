@@ -297,7 +297,7 @@ SDIZO::TreeNode<T>* SDIZO::Tree<T>::minumum(TreeNode<T>* node)
 	// Loop while left child exists
 	while (node->left != this->guard)
 	{
-		node = node->right;
+		node = node->left;
 	}
 	return node;
 }
