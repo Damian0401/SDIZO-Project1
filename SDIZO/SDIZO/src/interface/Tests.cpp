@@ -43,16 +43,19 @@ void SDIZO::Tests::printMessage(TestsMessageType messageType)
 		std::cout << "4 <- removeFront" << std::endl;
 		std::cout << "5 <- removeBack" << std::endl;
 		std::cout << "6 <- removeAt" << std::endl;
+		std::cout << "9 <- [read from file]" << std::endl;
 		std::cout << "0 <- [exit]" << std::endl;
 		break;
 	case SDIZO::TestsMessageType::ManuslHeapTestMenu:
 		std::cout << "1 <- add" << std::endl;
 		std::cout << "2 <- removeRoot" << std::endl;
+		std::cout << "9 <- [read from file]" << std::endl;
 		std::cout << "0 <- [exit]" << std::endl;
 		break;
 	case SDIZO::TestsMessageType::ManualTreeTestMenu:
 		std::cout << "1 <- add" << std::endl;
 		std::cout << "2 <- remove" << std::endl;
+		std::cout << "9 <- [read from file]" << std::endl;
 		std::cout << "0 <- [exit]" << std::endl;
 		break;
 	case SDIZO::TestsMessageType::AutomaticArrayTestMenu:

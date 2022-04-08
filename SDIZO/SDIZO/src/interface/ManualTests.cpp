@@ -10,10 +10,13 @@ SDIZO::ManualTests::~ManualTests()
 void SDIZO::ManualTests::arrayTest()
 {
 	Array<int>* testArray = new Array<int>();
+	int dataSize;
+	int* dataFromFile;
+	std::string fileName;
 	bool isRunning = true;
+	bool success = true;
 	int data = -1;
 	int position = -1;
-	bool success = true;
 
 	while (isRunning)
 	{
@@ -60,6 +63,24 @@ void SDIZO::ManualTests::arrayTest()
 			success = testArray->removeAt(position);
 			this->timer->stop();
 			break;
+		case 9:
+			std::cout << "Enter file name: ";
+			std::cin >> fileName;
+			std::tie(dataFromFile, dataSize) = this->getDataFromFile(fileName);
+
+			if (dataFromFile == nullptr)
+			{
+				std::cout << "Unable to read data" << std::endl;
+				continue;
+			}
+
+			for (size_t i = 0; i < dataSize; i++)
+			{
+				testArray->addBack(dataFromFile[i]);
+			}
+
+			delete dataFromFile;
+			break;
 		case 0:
 			isRunning = false;
 			break;
@@ -84,10 +105,13 @@ void SDIZO::ManualTests::arrayTest()
 void SDIZO::ManualTests::listTest()
 {
 	List<int>* testList = new List<int>();
+	int dataSize;
+	int* dataFromFile;
+	std::string fileName;
 	bool isRunning = true;
+	bool success = true;
 	int data = -1;
 	int position = -1;
-	bool success = true;
 
 	while (isRunning)
 	{
@@ -134,6 +158,24 @@ void SDIZO::ManualTests::listTest()
 			success = testList->removeAt(position);
 			this->timer->stop();
 			break;
+		case 9:
+			std::cout << "Enter file name: ";
+			std::cin >> fileName;
+			std::tie(dataFromFile, dataSize) = this->getDataFromFile(fileName);
+
+			if (dataFromFile == nullptr)
+			{
+				std::cout << "Unable to read data" << std::endl;
+				continue;
+			}
+
+			for (size_t i = 0; i < dataSize; i++)
+			{
+				testList->addBack(dataFromFile[i]);
+			}
+
+			delete dataFromFile;
+			break;
 		case 0:
 			isRunning = false;
 			break;
@@ -158,6 +200,9 @@ void SDIZO::ManualTests::listTest()
 void SDIZO::ManualTests::heapTest()
 {
 	Heap<int>* testHeap = new Heap<int>();
+	int dataSize;
+	int* dataFromFile;
+	std::string fileName;
 	bool isRunning = true;
 	int data = -1;
 	bool success = true;
@@ -183,6 +228,24 @@ void SDIZO::ManualTests::heapTest()
 			success = testHeap->removeRoot();
 			this->timer->stop();
 			break;
+		case 9:
+			std::cout << "Enter file name: ";
+			std::cin >> fileName;
+			std::tie(dataFromFile, dataSize) = this->getDataFromFile(fileName);
+
+			if (dataFromFile == nullptr)
+			{
+				std::cout << "Unable to read data" << std::endl;
+				continue;
+			}
+
+			for (size_t i = 0; i < dataSize; i++)
+			{
+				testHeap->add(dataFromFile[i]);
+			}
+
+			delete dataFromFile;
+			break;
 		case 0:
 			isRunning = false;
 			break;
@@ -207,6 +270,9 @@ void SDIZO::ManualTests::heapTest()
 void SDIZO::ManualTests::treeTest()
 {
 	Tree<int>* testTree = new Tree<int>();
+	int dataSize;
+	int* dataFromFile;
+	std::string fileName;
 	bool isRunning = true;
 	int data = -1;
 	bool success = true;
@@ -232,6 +298,24 @@ void SDIZO::ManualTests::treeTest()
 			this->timer->start();
 			success = testTree->remove(data);
 			this->timer->stop();
+			break;
+		case 9:
+			std::cout << "Enter file name: ";
+			std::cin >> fileName;
+			std::tie(dataFromFile, dataSize) = this->getDataFromFile(fileName);
+
+			if (dataFromFile == nullptr)
+			{
+				std::cout << "Unable to read data" << std::endl;
+				continue;
+			}
+
+			for (size_t i = 0; i < dataSize; i++)
+			{
+				testTree->add(dataFromFile[i]);
+			}
+
+			delete dataFromFile;
 			break;
 		case 0:
 			isRunning = false;
