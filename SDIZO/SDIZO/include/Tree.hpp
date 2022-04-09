@@ -12,6 +12,7 @@ namespace SDIZO
 		Tree();
 		~Tree();
 		virtual void add(const T& data);
+		virtual bool search(const T& data);
 		virtual bool remove(const T& data);
 		virtual void print(std::ostream& out);
 	private:

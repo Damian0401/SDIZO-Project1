@@ -87,6 +87,25 @@ bool SDIZO::Array<T>::addAt(const size_t& index, const T& data)
 }
 
 template<typename T>
+bool SDIZO::Array<T>::search(const T& data)
+{
+	if (this->size == 0)
+	{
+		return false;
+	}
+
+	for (size_t i = 0; i < this->size; i++)
+	{
+		if (this->head[i] == data)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+template<typename T>
 bool SDIZO::Array<T>::removeFront()
 {
 	// Check if any data exists

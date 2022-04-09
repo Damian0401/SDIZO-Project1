@@ -90,6 +90,28 @@ bool SDIZO::List<T>::addAt(const size_t& index, const T& data)
 }
 
 template<typename T>
+bool SDIZO::List<T>::search(const T& data)
+{
+	if (this->size == 0)
+	{
+		return false;
+	}
+
+	ListNode<T>* helper = this->firstNode;
+
+	do
+	{
+		if (helper->value == data)
+		{
+			return true;
+		}
+		helper = helper->next;
+	} while (helper->next != nullptr);
+
+	return false;
+}
+
+template<typename T>
 bool SDIZO::List<T>::removeFront()
 {
 	// Check if any data exists

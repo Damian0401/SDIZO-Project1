@@ -129,6 +129,37 @@ void SDIZO::Tree<T>::add(const T& data)
 }
 
 template<typename T>
+bool SDIZO::Tree<T>::search(const T& data)
+{
+	if (this->root == this->guard)
+	{
+		return false;
+	}
+
+	TreeNode<T>* helper = this->root;
+
+	do
+	{
+		if (data == helper->value)
+		{
+			return true;
+		}
+
+		if (data < helper->value)
+		{
+			helper = helper->left;
+		}
+
+		if (data > helper->value)
+		{
+			helper = helper->right;
+		}
+	} while (helper != this->guard);
+
+	return false;
+}
+
+template<typename T>
 bool SDIZO::Tree<T>::remove(const T& data)
 {
 	TreeNode<T>* nodeToRemove = this->findNode(data, this->root);

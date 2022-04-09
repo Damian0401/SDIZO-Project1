@@ -11,6 +11,7 @@ namespace SDIZO
 		Heap();
 		~Heap();
 		virtual void add(const T& data);
+		virtual bool search(const T& data);
 		virtual bool removeRoot();
 		virtual void print(std::ostream& out);
 	private:

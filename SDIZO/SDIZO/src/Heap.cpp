@@ -38,6 +38,25 @@ void SDIZO::Heap<T>::add(const T& data)
 }
 
 template<typename T>
+bool SDIZO::Heap<T>::search(const T& data)
+{
+	if (this->size == 0)
+	{
+		return false;
+	}
+
+	for (size_t i = 0; i < this->size; i++)
+	{
+		if (this->head[i] == data)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+template<typename T>
 bool SDIZO::Heap<T>::removeRoot()
 {
 	// Check if heap is not empty

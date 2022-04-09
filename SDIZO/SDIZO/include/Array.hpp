@@ -13,6 +13,7 @@ namespace SDIZO
 		virtual void addFront(const T& data);
 		virtual void addBack(const  T& data);
 		virtual bool addAt(const size_t& index, const T& data);
+		virtual bool search(const T& data);
 		virtual bool removeFront();
 		virtual bool removeBack();
 		virtual bool removeAt(const size_t& index);
