@@ -1,0 +1,2 @@
+Tree: add, data range: 0 - 1000, repeats: 1000, average time: 5565 ns
+Tree: removeRoot, data range: 0 - 1000, repeats: 1000, average time: 2060 ns

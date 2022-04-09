@@ -1,0 +1,6 @@
+List: addFront, data range: 0 - 1000, repeats: 1000, average time: 328 ns
+List: removeFront, data range: 0 - 1000, repeats: 1000, average time: 330 ns
+List: addBack, data range: 0 - 1000, repeats: 1000, average time: 323 ns
+List: removeBack, data range: 0 - 1000, repeats: 1000, average time: 333 ns
+List: addAt, data range: 0 - 1000, repeats: 1000, average time: 1663 ns
+List: removeAt, data range: 0 - 1000, repeats: 1000, average time: 1586 ns

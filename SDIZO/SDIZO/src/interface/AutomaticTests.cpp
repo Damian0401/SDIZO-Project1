@@ -1,7 +1,13 @@
+#include <vector>
+#include <numeric>
+#include <string>
 #include "../../include/interface/AutomaticTests.hpp"
 
 SDIZO::AutomaticTests::AutomaticTests(std::string baseSourcePath, std::string baseResultsPath) 
-	: Tests(baseSourcePath, baseResultsPath) {}
+	: Tests(baseSourcePath, baseResultsPath) 
+{
+	srand(time(nullptr));
+}
 
 SDIZO::AutomaticTests::~AutomaticTests()
 {
@@ -9,272 +15,384 @@ SDIZO::AutomaticTests::~AutomaticTests()
 
 void SDIZO::AutomaticTests::arrayTest()
 {
-	int dataSize;
-	int* dataFromFile;
-	std::string fileName;
+	Array<int>* systemUnderTests = nullptr;
 
-	std::cout << "Enter filename: ";
-	std::cin >> fileName;
+	int dataNumber = this->getSelected("Enter number of data", TestsMessageType::None);
+	int repeats = this->getSelected("Enter number of repeats", TestsMessageType::None);
+	int maxDataSize = this->getSelected("Enter maximum data size", TestsMessageType::None);
 
-	std::tie(dataFromFile, dataSize) = this->getDataFromFile(fileName);
-
-	if (dataFromFile == nullptr)
+	if (dataNumber < 10 && maxDataSize < 10)
 	{
-		std::cout << "Unable to read data" << std::endl;
+		std::cout << "Invalid initial data" << std::endl;
 		return;
 	}
 
-	Array<int>* systemUnderTest = new Array<int>();
+	std::ofstream resultFile(this->baseResultsPath + "array/" + std::to_string(dataNumber) + "-results.txt");
 
-	std::ofstream addFrontResultFile(this->baseResultsPath + "array/addFront-" + fileName);
-	for (size_t i = 0; i < dataSize; i++)
+	std::vector<int> addResults;
+	addResults.reserve(dataNumber);
+	std::vector<int> removeResults;
+	removeResults.reserve(dataNumber);
+	std::vector<int> searchResults;
+	searchResults.reserve(dataNumber);
+	int valueToAdd = -1;
+	int valueToSearch = -1;
+
+	for (size_t i = 0; i < repeats; i++)
 	{
+		systemUnderTests = new Array<int>();
+		
+		for (size_t i = 0; i < dataNumber - 1; i++)
+		{
+			valueToAdd = rand() % (maxDataSize + 1);
+			systemUnderTests->addFront(valueToAdd);
+			if (i == dataNumber / 2)
+			{
+				valueToSearch = valueToAdd;
+			}
+		}
+		
 		this->timer->start();
-		systemUnderTest->addFront(dataFromFile[i]);
+		systemUnderTests->addFront(rand() % (maxDataSize + 1));
 		this->timer->stop();
-		addFrontResultFile << this->timer->getTime() << std::endl;
+		addResults.push_back(this->timer->getTime());
+		
+		this->timer->start();
+		systemUnderTests->search(valueToSearch);
+		this->timer->stop();
+		searchResults.push_back(this->timer->getTime());
+		
+		this->timer->start();
+		systemUnderTests->removeFront();
+		this->timer->stop();
+		removeResults.push_back(this->timer->getTime());
+		
+		delete systemUnderTests;
 	}
-	addFrontResultFile.close();
 
-	std::ofstream removeFrontResultFile(this->baseResultsPath + "array/removeFront-" + fileName);
-	for (size_t i = 0; i < dataSize; i++)
+	resultFile << "Array: addFront, data range: 0 - " << maxDataSize << ", repeats: " << repeats 
+		<< ", average time: " << (std::accumulate(addResults.begin(), addResults.end(), 0) / dataNumber) << std::endl;
+	resultFile << "Array: removeFront, data range: 0 - " << maxDataSize << ", repeats: " << repeats 
+		<< ", average time: " << (std::accumulate(removeResults.begin(), removeResults.end(), 0) / dataNumber) << std::endl;
+
+	addResults.clear();
+	removeResults.clear();
+
+	for (size_t i = 0; i < repeats; i++)
 	{
-		this->timer->start();
-		systemUnderTest->removeFront();
-		this->timer->stop();
-		removeFrontResultFile << this->timer->getTime() << std::endl;
-	}
-	removeFrontResultFile.close();
+		systemUnderTests = new Array<int>();
 
-	std::ofstream addBackResultFile(this->baseResultsPath + "array/addBack-" + fileName);
-	for (size_t i = 0; i < dataSize; i++)
+		for (size_t i = 0; i < dataNumber - 1; i++)
+		{
+			systemUnderTests->addFront(rand() % (maxDataSize + 1));
+		}
+
+		this->timer->start();
+		systemUnderTests->addBack(rand() % (maxDataSize + 1));
+		this->timer->stop();
+		addResults.push_back(this->timer->getTime());
+
+		this->timer->start();
+		systemUnderTests->removeBack();
+		this->timer->stop();
+		removeResults.push_back(this->timer->getTime());
+
+		delete systemUnderTests;
+	}
+
+	resultFile << "Array: addBack, data range: 0 - " << maxDataSize << ", repeats: " << repeats
+		<< ", average time: " << (std::accumulate(addResults.begin(), addResults.end(), 0) / dataNumber) << std::endl;
+	resultFile << "Array: removeBack, data range: 0 - " << maxDataSize << ", repeats: " << repeats
+		<< ", average time: " << (std::accumulate(removeResults.begin(), removeResults.end(), 0) / dataNumber) << std::endl;
+
+	addResults.clear();
+	removeResults.clear();
+
+	for (size_t i = 0; i < repeats; i++)
 	{
+		systemUnderTests = new Array<int>();
+
+		for (size_t i = 0; i < dataNumber - 1; i++)
+		{
+			systemUnderTests->addFront(rand() % (maxDataSize + 1));
+		}
+
 		this->timer->start();
-		systemUnderTest->addBack(dataFromFile[i]);
+		systemUnderTests->addAt(rand() % systemUnderTests->getSize(), rand() % (maxDataSize + 1));
 		this->timer->stop();
-		addBackResultFile << this->timer->getTime() << std::endl;
-	}
-	addBackResultFile.close();
+		addResults.push_back(this->timer->getTime());
 
-	std::ofstream removeBackResultFile(this->baseResultsPath + "array/removeBack-" + fileName);
-	for (size_t i = 0; i < dataSize; i++)
-	{
 		this->timer->start();
-		systemUnderTest->removeBack();
+		systemUnderTests->removeAt(rand() % systemUnderTests->getSize());
 		this->timer->stop();
-		removeBackResultFile << this->timer->getTime() << std::endl;
+		removeResults.push_back(this->timer->getTime());
+
+		delete systemUnderTests;
 	}
-	removeBackResultFile.close();
 
-	std::ofstream addAtResultFile(this->baseResultsPath + "array/addAt-" + fileName);
-	this->timer->start();
-	systemUnderTest->addAt(0, dataFromFile[0]);
-	this->timer->stop();
-	addAtResultFile << this->timer->getTime() << std::endl;
-	for (size_t i = 1; i < dataSize; i++)
-	{
-		this->timer->start();
-		systemUnderTest->addAt(rand() % systemUnderTest->getSize(), dataFromFile[i]);
-		this->timer->stop();
-		addAtResultFile << this->timer->getTime() << std::endl;
-	}
-	addAtResultFile.close();
+	resultFile << "Array: addAt, data range: 0 - " << maxDataSize << ", repeats: " << repeats
+		<< ", average time: " << (std::accumulate(addResults.begin(), addResults.end(), 0) / dataNumber) << std::endl;
+	resultFile << "Array: removeAt, data range: 0 - " << maxDataSize << ", repeats: " << repeats
+		<< ", average time: " << (std::accumulate(removeResults.begin(), removeResults.end(), 0) / dataNumber) << std::endl;
 
-	std::ofstream removeAtResultFile(this->baseResultsPath + "array/removeAt-" + fileName);
-	for (size_t i = 0; i < dataSize; i++)
-	{
-		this->timer->start();
-		systemUnderTest->removeAt(rand() % systemUnderTest->getSize());
-		this->timer->stop();
-		removeAtResultFile << this->timer->getTime() << std::endl;
-	}
-	removeAtResultFile.close();
-
-	std::cout << "Succeeded" << std::endl;
-
-	delete systemUnderTest;
-	delete[] dataFromFile;
+	resultFile.close();
 }
 
 void SDIZO::AutomaticTests::listTest()
 {
-	int dataSize;
-	int* dataFromFile;
-	std::string fileName;
+	List<int>* systemUnderTests = nullptr;
 
-	std::cout << "Enter filename: ";
-	std::cin >> fileName;
+	int dataNumber = this->getSelected("Enter number of data", TestsMessageType::None);
+	int repeats = this->getSelected("Enter number of repeats", TestsMessageType::None);
+	int maxDataSize = this->getSelected("Enter maximum data size", TestsMessageType::None);
 
-	std::tie(dataFromFile, dataSize) = this->getDataFromFile(fileName);
-
-	if (dataFromFile == nullptr)
+	if (dataNumber < 10 && maxDataSize < 10)
 	{
-		std::cout << "Unable to read data" << std::endl;
+		std::cout << "Invalid initial data" << std::endl;
 		return;
 	}
 
-	List<int>* systemUnderTest = new List<int>();
+	std::ofstream resultFile(this->baseResultsPath + "list/" + std::to_string(dataNumber) + "-results.txt");
 
-	std::ofstream addFrontResultFile(this->baseResultsPath + "list/addFront-" + fileName);
-	for (size_t i = 0; i < dataSize; i++)
+	std::vector<int> addResults;
+	addResults.reserve(dataNumber);
+	std::vector<int> removeResults;
+	removeResults.reserve(dataNumber);
+	std::vector<int> searchResults;
+	searchResults.reserve(dataNumber);
+	int valueToAdd = -1;
+	int valueToSearch = -1;
+
+	for (size_t i = 0; i < repeats; i++)
 	{
-		this->timer->start();
-		systemUnderTest->addFront(dataFromFile[i]);
-		this->timer->stop();
-		addFrontResultFile << this->timer->getTime() << std::endl;
-	}
-	addFrontResultFile.close();
+		systemUnderTests = new List<int>();
 
-	std::ofstream removeFrontResultFile(this->baseResultsPath + "list/removeFront-" + fileName);
-	for (size_t i = 0; i < dataSize; i++)
+		for (size_t i = 0; i < dataNumber - 1; i++)
+		{
+			valueToAdd = rand() % (maxDataSize + 1);
+			systemUnderTests->addFront(valueToAdd);
+			if (i == dataNumber / 2)
+			{
+				valueToSearch = valueToAdd;
+			}
+		}
+
+		this->timer->start();
+		systemUnderTests->addFront(rand() % (maxDataSize + 1));
+		this->timer->stop();
+		addResults.push_back(this->timer->getTime());
+
+		this->timer->start();
+		systemUnderTests->search(valueToSearch);
+		this->timer->stop();
+		searchResults.push_back(this->timer->getTime());
+
+		this->timer->start();
+		systemUnderTests->removeFront();
+		this->timer->stop();
+		removeResults.push_back(this->timer->getTime());
+
+		delete systemUnderTests;
+	}
+
+	resultFile << "List: addFront, data range: 0 - " << maxDataSize << ", repeats: " << repeats
+		<< ", average time: " << (std::accumulate(addResults.begin(), addResults.end(), 0) / dataNumber) << std::endl;
+	resultFile << "List: removeFront, data range: 0 - " << maxDataSize << ", repeats: " << repeats
+		<< ", average time: " << (std::accumulate(removeResults.begin(), removeResults.end(), 0) / dataNumber) << std::endl;
+
+	addResults.clear();
+	removeResults.clear();
+
+	for (size_t i = 0; i < repeats; i++)
 	{
-		this->timer->start();
-		systemUnderTest->removeFront();
-		this->timer->stop();
-		removeFrontResultFile << this->timer->getTime() << std::endl;
-	}
-	removeFrontResultFile.close();
+		systemUnderTests = new List<int>();
 
-	std::ofstream addBackResultFile(this->baseResultsPath + "list/addBack-" + fileName);
-	for (size_t i = 0; i < dataSize; i++)
+		for (size_t i = 0; i < dataNumber - 1; i++)
+		{
+			systemUnderTests->addFront(rand() % (maxDataSize + 1));
+		}
+
+		this->timer->start();
+		systemUnderTests->addBack(rand() % (maxDataSize + 1));
+		this->timer->stop();
+		addResults.push_back(this->timer->getTime());
+
+		this->timer->start();
+		systemUnderTests->removeBack();
+		this->timer->stop();
+		removeResults.push_back(this->timer->getTime());
+
+		delete systemUnderTests;
+	}
+
+	resultFile << "List: addBack, data range: 0 - " << maxDataSize << ", repeats: " << repeats
+		<< ", average time: " << (std::accumulate(addResults.begin(), addResults.end(), 0) / dataNumber) << std::endl;
+	resultFile << "List: removeBack, data range: 0 - " << maxDataSize << ", repeats: " << repeats
+		<< ", average time: " << (std::accumulate(removeResults.begin(), removeResults.end(), 0) / dataNumber) << std::endl;
+
+	addResults.clear();
+	removeResults.clear();
+
+	for (size_t i = 0; i < repeats; i++)
 	{
+		systemUnderTests = new List<int>();
+
+		for (size_t i = 0; i < dataNumber - 1; i++)
+		{
+			systemUnderTests->addFront(rand() % (maxDataSize + 1));
+		}
+
 		this->timer->start();
-		systemUnderTest->addBack(dataFromFile[i]);
+		systemUnderTests->addAt(rand() % systemUnderTests->getSize(), rand() % (maxDataSize + 1));
 		this->timer->stop();
-		addBackResultFile << this->timer->getTime() << std::endl;
-	}
-	addBackResultFile.close();
+		addResults.push_back(this->timer->getTime());
 
-	std::ofstream removeBackResultFile(this->baseResultsPath + "list/removeBack-" + fileName);
-	for (size_t i = 0; i < dataSize; i++)
-	{
 		this->timer->start();
-		systemUnderTest->removeBack();
+		systemUnderTests->removeAt(rand() % systemUnderTests->getSize());
 		this->timer->stop();
-		removeBackResultFile << this->timer->getTime() << std::endl;
+		removeResults.push_back(this->timer->getTime());
+
+		delete systemUnderTests;
 	}
-	removeBackResultFile.close();
 
-	std::ofstream addAtResultFile(this->baseResultsPath + "list/addAt-" + fileName);
-	this->timer->start();
-	systemUnderTest->addAt(0, dataFromFile[0]);
-	this->timer->stop();
-	addAtResultFile << this->timer->getTime() << std::endl;
-	for (size_t i = 1; i < dataSize; i++)
-	{
-		this->timer->start();
-		systemUnderTest->addAt(rand() % systemUnderTest->getSize(), dataFromFile[i]);
-		this->timer->stop();
-		addAtResultFile << this->timer->getTime() << std::endl;
-	}
-	addAtResultFile.close();
+	resultFile << "List: addAt, data range: 0 - " << maxDataSize << ", repeats: " << repeats
+		<< ", average time: " << (std::accumulate(addResults.begin(), addResults.end(), 0) / dataNumber) << std::endl;
+	resultFile << "List: removeAt, data range: 0 - " << maxDataSize << ", repeats: " << repeats
+		<< ", average time: " << (std::accumulate(removeResults.begin(), removeResults.end(), 0) / dataNumber) << std::endl;
 
-	std::ofstream removeAtResultFile(this->baseResultsPath + "list/removeAt-" + fileName);
-	for (size_t i = 0; i < dataSize; i++)
-	{
-		this->timer->start();
-		systemUnderTest->removeAt(rand() % systemUnderTest->getSize());
-		this->timer->stop();
-		removeAtResultFile << this->timer->getTime() << std::endl;
-	}
-	removeAtResultFile.close();
-
-	std::cout << "Succeeded" << std::endl;
-
-	delete systemUnderTest;
-	delete[] dataFromFile;
+	resultFile.close();
 }
 
 
 
 void SDIZO::AutomaticTests::heapTest()
 {
-	int dataSize;
-	int* dataFromFile;
-	std::string fileName;
+	Heap<int>* systemUnderTests = nullptr;
 
-	std::cout << "Enter filename: ";
-	std::cin >> fileName;
+	int dataNumber = this->getSelected("Enter number of data", TestsMessageType::None);
+	int repeats = this->getSelected("Enter number of repeats", TestsMessageType::None);
+	int maxDataSize = this->getSelected("Enter maximum data size", TestsMessageType::None);
 
-	std::tie(dataFromFile, dataSize) = this->getDataFromFile(fileName);
-
-	if (dataFromFile == nullptr)
+	if (dataNumber < 10 && maxDataSize < 10)
 	{
-		std::cout << "Unable to read data" << std::endl;
+		std::cout << "Invalid initial data" << std::endl;
 		return;
 	}
 
-	Heap<int>* systemUnderTest = new Heap<int>();
+	std::ofstream resultFile(this->baseResultsPath + "heap/" + std::to_string(dataNumber) + "-results.txt");
 
-	std::ofstream addResultFile(this->baseResultsPath + "heap/add-" + fileName);
-	for (size_t i = 0; i < dataSize; i++)
+	std::vector<int> addResults;
+	addResults.reserve(dataNumber);
+	std::vector<int> removeResults;
+	removeResults.reserve(dataNumber);
+	std::vector<int> searchResults;
+	searchResults.reserve(dataNumber);
+	int valueToAdd = -1;
+	int valueToSearch = -1;
+
+	for (size_t i = 0; i < repeats; i++)
 	{
+		systemUnderTests = new Heap<int>();
+
+		for (size_t i = 0; i < dataNumber - 1; i++)
+		{
+			valueToAdd = rand() % (maxDataSize + 1);
+			systemUnderTests->add(valueToAdd);
+			if (i == dataNumber / 2)
+			{
+				valueToSearch = valueToAdd;
+			}
+		}
+
 		this->timer->start();
-		systemUnderTest->add(dataFromFile[i]);
+		systemUnderTests->add(rand() % (maxDataSize + 1));
 		this->timer->stop();
-		addResultFile << this->timer->getTime() << std::endl;
-	}
-	addResultFile.close();
+		addResults.push_back(this->timer->getTime());
 
-	std::ofstream removeRootResultFile(this->baseResultsPath + "heap/removeRoot-" + fileName);
-	for (size_t i = 0; i < dataSize; i++)
-	{
 		this->timer->start();
-		systemUnderTest->removeRoot();
+		systemUnderTests->search(valueToSearch);
 		this->timer->stop();
-		removeRootResultFile << this->timer->getTime() << std::endl;
+		searchResults.push_back(this->timer->getTime());
+
+		this->timer->start();
+		systemUnderTests->removeRoot();
+		this->timer->stop();
+		removeResults.push_back(this->timer->getTime());
+
+		delete systemUnderTests;
 	}
-	removeRootResultFile.close();
 
-	std::cout << "Succeeded" << std::endl;
+	resultFile << "Heap: add, data range: 0 - " << maxDataSize << ", repeats: " << repeats
+		<< ", average time: " << (std::accumulate(addResults.begin(), addResults.end(), 0) / dataNumber) << std::endl;
+	resultFile << "Heap: removeRoot, data range: 0 - " << maxDataSize << ", repeats: " << repeats
+		<< ", average time: " << (std::accumulate(removeResults.begin(), removeResults.end(), 0) / dataNumber) << std::endl;
 
-	delete systemUnderTest;
-	delete[] dataFromFile;
+	resultFile.close();
 }
 
 
 
 void SDIZO::AutomaticTests::treeTest()
 {
-	int dataSize;
-	int* dataFromFile;
-	std::string fileName;
+	Tree<int>* systemUnderTests = nullptr;
 
-	std::cout << "Enter filename: ";
-	std::cin >> fileName;
+	int dataNumber = this->getSelected("Enter number of data", TestsMessageType::None);
+	int repeats = this->getSelected("Enter number of repeats", TestsMessageType::None);
+	int maxDataSize = this->getSelected("Enter maximum data size", TestsMessageType::None);
 
-	std::tie(dataFromFile, dataSize) = this->getDataFromFile(fileName);
-
-	if (dataFromFile == nullptr)
+	if (dataNumber < 10 && maxDataSize < 10)
 	{
-		std::cout << "Unable to read data" << std::endl;
+		std::cout << "Invalid initial data" << std::endl;
 		return;
 	}
 
-	Tree<int>* systemUnderTest = new Tree<int>();
+	std::ofstream resultFile(this->baseResultsPath + "tree/" + std::to_string(dataNumber) + "-results.txt");
 
-	std::ofstream addResultFile(this->baseResultsPath + "tree/add-" + fileName);
-	for (size_t i = 0; i < dataSize; i++)
+	std::vector<int> addResults;
+	addResults.reserve(dataNumber);
+	std::vector<int> removeResults;
+	removeResults.reserve(dataNumber);
+	std::vector<int> searchResults;
+	searchResults.reserve(dataNumber);
+	int valueToAdd = -1;
+	int valueToSearch = -1;
+
+	for (size_t i = 0; i < repeats; i++)
 	{
+		systemUnderTests = new Tree<int>();
+
+		for (size_t i = 0; i < dataNumber - 1; i++)
+		{
+			valueToAdd = rand() % (maxDataSize + 1);
+			systemUnderTests->add(valueToAdd);
+			if (i == dataNumber / 2)
+			{
+				valueToSearch = valueToAdd;
+			}
+		}
+
 		this->timer->start();
-		systemUnderTest->add(dataFromFile[i]);
+		systemUnderTests->add(rand() % (maxDataSize + 1));
 		this->timer->stop();
-		addResultFile << this->timer->getTime() << std::endl;
-	}
-	addResultFile.close();
+		addResults.push_back(this->timer->getTime());
 
-	std::ofstream removeResultFile(this->baseResultsPath + "tree/remove-" + fileName);
-	for (size_t i = 0; i < dataSize; i++)
-	{
 		this->timer->start();
-		systemUnderTest->remove(dataFromFile[i]);
+		systemUnderTests->search(valueToSearch);
 		this->timer->stop();
-		removeResultFile << this->timer->getTime() << std::endl;
+		searchResults.push_back(this->timer->getTime());
+
+		this->timer->start();
+		systemUnderTests->remove(valueToSearch);
+		this->timer->stop();
+		removeResults.push_back(this->timer->getTime());
+
+		delete systemUnderTests;
 	}
-	removeResultFile.close();
 
-	std::cout << "Succeeded" << std::endl;
+	resultFile << "Tree: add, data range: 0 - " << maxDataSize << ", repeats: " << repeats
+		<< ", average time: " << (std::accumulate(addResults.begin(), addResults.end(), 0) / dataNumber) << std::endl;
+	resultFile << "Tree: removeRoot, data range: 0 - " << maxDataSize << ", repeats: " << repeats
+		<< ", average time: " << (std::accumulate(removeResults.begin(), removeResults.end(), 0) / dataNumber) << std::endl;
 
-	delete systemUnderTest;
-	delete[] dataFromFile;
+	resultFile.close();
 }
