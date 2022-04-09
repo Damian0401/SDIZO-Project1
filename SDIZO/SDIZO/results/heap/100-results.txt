@@ -1,2 +1,3 @@
-Heap: add, data range: 0 - 1000, repeats: 1000, average time: 8689 ns
-Heap: removeRoot, data range: 0 - 1000, repeats: 1000, average time: 9046 ns
+Heap: search, data range: 0 - 1000, repeats: 1000, average time: 202
+Heap: add, data range: 0 - 1000, repeats: 1000, average time: 904
+Heap: removeRoot, data range: 0 - 1000, repeats: 1000, average time: 938

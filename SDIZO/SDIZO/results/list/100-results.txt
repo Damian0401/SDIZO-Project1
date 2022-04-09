@@ -1,6 +1,7 @@
-List: addFront, data range: 0 - 1000, repeats: 1000, average time: 3212 ns
-List: removeFront, data range: 0 - 1000, repeats: 1000, average time: 2791 ns
-List: addBack, data range: 0 - 1000, repeats: 1000, average time: 2772 ns
-List: removeBack, data range: 0 - 1000, repeats: 1000, average time: 2571 ns
-List: addAt, data range: 0 - 1000, repeats: 1000, average time: 4514 ns
-List: removeAt, data range: 0 - 1000, repeats: 1000, average time: 4623 ns
+List: search, data range: 0 - 1000, repeats: 1000, average time: 270
+List: addFront, data range: 0 - 1000, repeats: 1000, average time: 328
+List: removeFront, data range: 0 - 1000, repeats: 1000, average time: 299
+List: addBack, data range: 0 - 1000, repeats: 1000, average time: 290
+List: removeBack, data range: 0 - 1000, repeats: 1000, average time: 268
+List: addAt, data range: 0 - 1000, repeats: 1000, average time: 502
+List: removeAt, data range: 0 - 1000, repeats: 1000, average time: 565

@@ -70,13 +70,16 @@ void SDIZO::AutomaticTests::arrayTest()
 		delete systemUnderTests;
 	}
 
+	resultFile << "Array: search, data range: 0 - " << maxDataSize << ", repeats: " << repeats
+		<< ", average time: " << (std::accumulate(searchResults.begin(), searchResults.end(), 0) / searchResults.size()) << std::endl;
 	resultFile << "Array: addFront, data range: 0 - " << maxDataSize << ", repeats: " << repeats 
-		<< ", average time: " << (std::accumulate(addResults.begin(), addResults.end(), 0) / dataNumber) << std::endl;
+		<< ", average time: " << (std::accumulate(addResults.begin(), addResults.end(), 0) / addResults.size()) << std::endl;
 	resultFile << "Array: removeFront, data range: 0 - " << maxDataSize << ", repeats: " << repeats 
-		<< ", average time: " << (std::accumulate(removeResults.begin(), removeResults.end(), 0) / dataNumber) << std::endl;
+		<< ", average time: " << (std::accumulate(removeResults.begin(), removeResults.end(), 0) / removeResults.size()) << std::endl;
 
 	addResults.clear();
 	removeResults.clear();
+	searchResults.clear();
 
 	for (size_t i = 0; i < repeats; i++)
 	{
@@ -101,9 +104,9 @@ void SDIZO::AutomaticTests::arrayTest()
 	}
 
 	resultFile << "Array: addBack, data range: 0 - " << maxDataSize << ", repeats: " << repeats
-		<< ", average time: " << (std::accumulate(addResults.begin(), addResults.end(), 0) / dataNumber) << std::endl;
+		<< ", average time: " << (std::accumulate(addResults.begin(), addResults.end(), 0) / addResults.size()) << std::endl;
 	resultFile << "Array: removeBack, data range: 0 - " << maxDataSize << ", repeats: " << repeats
-		<< ", average time: " << (std::accumulate(removeResults.begin(), removeResults.end(), 0) / dataNumber) << std::endl;
+		<< ", average time: " << (std::accumulate(removeResults.begin(), removeResults.end(), 0) / removeResults.size()) << std::endl;
 
 	addResults.clear();
 	removeResults.clear();
@@ -131,9 +134,9 @@ void SDIZO::AutomaticTests::arrayTest()
 	}
 
 	resultFile << "Array: addAt, data range: 0 - " << maxDataSize << ", repeats: " << repeats
-		<< ", average time: " << (std::accumulate(addResults.begin(), addResults.end(), 0) / dataNumber) << std::endl;
+		<< ", average time: " << (std::accumulate(addResults.begin(), addResults.end(), 0) / addResults.size()) << std::endl;
 	resultFile << "Array: removeAt, data range: 0 - " << maxDataSize << ", repeats: " << repeats
-		<< ", average time: " << (std::accumulate(removeResults.begin(), removeResults.end(), 0) / dataNumber) << std::endl;
+		<< ", average time: " << (std::accumulate(removeResults.begin(), removeResults.end(), 0) / removeResults.size()) << std::endl;
 
 	resultFile.close();
 }
@@ -195,13 +198,16 @@ void SDIZO::AutomaticTests::listTest()
 		delete systemUnderTests;
 	}
 
+	resultFile << "List: search, data range: 0 - " << maxDataSize << ", repeats: " << repeats
+		<< ", average time: " << (std::accumulate(searchResults.begin(), searchResults.end(), 0) / searchResults.size()) << std::endl;
 	resultFile << "List: addFront, data range: 0 - " << maxDataSize << ", repeats: " << repeats
-		<< ", average time: " << (std::accumulate(addResults.begin(), addResults.end(), 0) / dataNumber) << std::endl;
+		<< ", average time: " << (std::accumulate(addResults.begin(), addResults.end(), 0) / addResults.size()) << std::endl;
 	resultFile << "List: removeFront, data range: 0 - " << maxDataSize << ", repeats: " << repeats
-		<< ", average time: " << (std::accumulate(removeResults.begin(), removeResults.end(), 0) / dataNumber) << std::endl;
+		<< ", average time: " << (std::accumulate(removeResults.begin(), removeResults.end(), 0) / removeResults.size()) << std::endl;
 
 	addResults.clear();
 	removeResults.clear();
+	searchResults.clear();
 
 	for (size_t i = 0; i < repeats; i++)
 	{
@@ -226,9 +232,9 @@ void SDIZO::AutomaticTests::listTest()
 	}
 
 	resultFile << "List: addBack, data range: 0 - " << maxDataSize << ", repeats: " << repeats
-		<< ", average time: " << (std::accumulate(addResults.begin(), addResults.end(), 0) / dataNumber) << std::endl;
+		<< ", average time: " << (std::accumulate(addResults.begin(), addResults.end(), 0) / addResults.size()) << std::endl;
 	resultFile << "List: removeBack, data range: 0 - " << maxDataSize << ", repeats: " << repeats
-		<< ", average time: " << (std::accumulate(removeResults.begin(), removeResults.end(), 0) / dataNumber) << std::endl;
+		<< ", average time: " << (std::accumulate(removeResults.begin(), removeResults.end(), 0) / removeResults.size()) << std::endl;
 
 	addResults.clear();
 	removeResults.clear();
@@ -256,9 +262,9 @@ void SDIZO::AutomaticTests::listTest()
 	}
 
 	resultFile << "List: addAt, data range: 0 - " << maxDataSize << ", repeats: " << repeats
-		<< ", average time: " << (std::accumulate(addResults.begin(), addResults.end(), 0) / dataNumber) << std::endl;
+		<< ", average time: " << (std::accumulate(addResults.begin(), addResults.end(), 0) / addResults.size()) << std::endl;
 	resultFile << "List: removeAt, data range: 0 - " << maxDataSize << ", repeats: " << repeats
-		<< ", average time: " << (std::accumulate(removeResults.begin(), removeResults.end(), 0) / dataNumber) << std::endl;
+		<< ", average time: " << (std::accumulate(removeResults.begin(), removeResults.end(), 0) / removeResults.size()) << std::endl;
 
 	resultFile.close();
 }
@@ -322,10 +328,12 @@ void SDIZO::AutomaticTests::heapTest()
 		delete systemUnderTests;
 	}
 
+	resultFile << "Heap: search, data range: 0 - " << maxDataSize << ", repeats: " << repeats
+		<< ", average time: " << (std::accumulate(searchResults.begin(), searchResults.end(), 0) / searchResults.size()) << std::endl;
 	resultFile << "Heap: add, data range: 0 - " << maxDataSize << ", repeats: " << repeats
-		<< ", average time: " << (std::accumulate(addResults.begin(), addResults.end(), 0) / dataNumber) << std::endl;
+		<< ", average time: " << (std::accumulate(addResults.begin(), addResults.end(), 0) / addResults.size()) << std::endl;
 	resultFile << "Heap: removeRoot, data range: 0 - " << maxDataSize << ", repeats: " << repeats
-		<< ", average time: " << (std::accumulate(removeResults.begin(), removeResults.end(), 0) / dataNumber) << std::endl;
+		<< ", average time: " << (std::accumulate(removeResults.begin(), removeResults.end(), 0) / removeResults.size()) << std::endl;
 
 	resultFile.close();
 }
@@ -389,10 +397,12 @@ void SDIZO::AutomaticTests::treeTest()
 		delete systemUnderTests;
 	}
 
+	resultFile << "Tree: search, data range: 0 - " << maxDataSize << ", repeats: " << repeats
+		<< ", average time: " << (std::accumulate(searchResults.begin(), searchResults.end(), 0) / searchResults.size()) << std::endl;
 	resultFile << "Tree: add, data range: 0 - " << maxDataSize << ", repeats: " << repeats
-		<< ", average time: " << (std::accumulate(addResults.begin(), addResults.end(), 0) / dataNumber) << std::endl;
+		<< ", average time: " << (std::accumulate(addResults.begin(), addResults.end(), 0) / addResults.size()) << std::endl;
 	resultFile << "Tree: removeRoot, data range: 0 - " << maxDataSize << ", repeats: " << repeats
-		<< ", average time: " << (std::accumulate(removeResults.begin(), removeResults.end(), 0) / dataNumber) << std::endl;
+		<< ", average time: " << (std::accumulate(removeResults.begin(), removeResults.end(), 0) / removeResults.size()) << std::endl;
 
 	resultFile.close();
 }
