@@ -63,6 +63,16 @@ void SDIZO::ManualTests::arrayTest()
 			success = testArray->removeAt(position);
 			this->timer->stop();
 			break;
+		case 7:
+			data = this->getSelected("Enter data", TestsMessageType::None);
+			this->timer->start();
+			success = testArray->search(data);
+			this->timer->stop();
+			if (success)
+			{
+				std::cout << "Found" << std::endl;
+			}
+			break;
 		case 9:
 			std::cout << "Enter file name: ";
 			std::cin >> fileName;
@@ -158,6 +168,16 @@ void SDIZO::ManualTests::listTest()
 			success = testList->removeAt(position);
 			this->timer->stop();
 			break;
+		case 7:
+			data = this->getSelected("Enter data", TestsMessageType::None);
+			this->timer->start();
+			success = testList->search(data);
+			this->timer->stop();
+			if (success)
+			{
+				std::cout << "Found" << std::endl;
+			}
+			break;
 		case 9:
 			std::cout << "Enter file name: ";
 			std::cin >> fileName;
@@ -227,6 +247,16 @@ void SDIZO::ManualTests::heapTest()
 			this->timer->start();
 			success = testHeap->removeRoot();
 			this->timer->stop();
+			break;
+		case 3:
+			data = this->getSelected("Enter data", TestsMessageType::None);
+			this->timer->start();
+			success = testHeap->search(data);
+			this->timer->stop();
+			if (success)
+			{
+				std::cout << "Found" << std::endl;
+			}
 			break;
 		case 9:
 			std::cout << "Enter file name: ";
@@ -298,6 +328,16 @@ void SDIZO::ManualTests::treeTest()
 			this->timer->start();
 			success = testTree->remove(data);
 			this->timer->stop();
+			break;
+		case 3:
+			data = this->getSelected("Enter data", TestsMessageType::None);
+			this->timer->start();
+			success = testTree->search(data);
+			this->timer->stop();
+			if (success)
+			{
+				std::cout << "Found" << std::endl;
+			}
 			break;
 		case 9:
 			std::cout << "Enter file name: ";
