@@ -466,18 +466,21 @@ void SDIZO::Tree<T>::deleteFixUp(TreeNode<T>* node)
 				helper->color = Color::Red;
 				node = node->parent;
 			}
-			else if (helper->right->color == Color::Black)
+			else 
 			{
-				helper->left->color = Color::Black;
-				helper->color = Color::Red;
-				this->rightRotation(helper);
-				helper = node->parent->right;
+				if (helper->right->color == Color::Black)
+				{
+					helper->left->color = Color::Black;
+					helper->color = Color::Red;
+					this->rightRotation(helper);
+					helper = node->parent->right;
+				}
+				helper->color = helper->parent->color;
+				node->parent->color = Color::Black;
+				helper->right->color = Color::Black;
+				this->leftRotation(node->parent);
+				node = this->root;
 			}
-			helper->color = helper->parent->color;
-			node->parent->color = Color::Black;
-			helper->right->color = Color::Black;
-			this->leftRotation(node->parent);
-			node = this->root;
 		}
 		else
 		{
@@ -497,18 +500,21 @@ void SDIZO::Tree<T>::deleteFixUp(TreeNode<T>* node)
 				helper->color = Color::Red;
 				node = node->parent;
 			}
-			else if (helper->left->color == Color::Black)
+			else 
 			{
-				helper->right->color = Color::Black;
-				helper->color = Color::Red;
-				this->leftRotation(helper);
-				helper = node->parent->left;
+				if (helper->left->color == Color::Black)
+				{
+					helper->right->color = Color::Black;
+					helper->color = Color::Red;
+					this->leftRotation(helper);
+					helper = node->parent->left;
+				}
+				helper->color = helper->parent->color;
+				node->parent->color = Color::Black;
+				helper->left->color = Color::Black;
+				this->rightRotation(node->parent);
+				node = this->root;
 			}
-			helper->color = helper->parent->color;
-			node->parent->color = Color::Black;
-			helper->left->color = Color::Black;
-			this->rightRotation(node->parent);
-			node = this->root;
 		}
 	}
 	node->color = Color::Black;
