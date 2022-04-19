@@ -92,22 +92,32 @@ bool SDIZO::List<T>::addAt(const size_t& index, const T& data)
 template<typename T>
 bool SDIZO::List<T>::search(const T& data)
 {
+	// Check if any nodes exists
 	if (this->size == 0)
 	{
 		return false;
 	}
 
+	// Create helper node
 	ListNode<T>* helper = this->firstNode;
 
-	do
+	// Find node
+	while(true)
 	{
 		if (helper->value == data)
 		{
 			return true;
 		}
-		helper = helper->next;
-	} while (helper->next != nullptr);
 
+		helper = helper->next;
+
+		if (helper == nullptr)
+		{
+			break;
+		}
+	}
+
+	// Return false if node does not exists
 	return false;
 }
 
@@ -190,8 +200,10 @@ bool SDIZO::List<T>::removeAt(const size_t& index)
 		return true;
 	}
 
+	// Find middle index
 	size_t middleIndex = this->size / 2;
 
+	// Check if searched index is in the first half of list
 	if (index < middleIndex)
 	{
 		this->removeFromFront(index);
