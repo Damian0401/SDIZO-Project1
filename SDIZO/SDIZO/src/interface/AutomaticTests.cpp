@@ -401,7 +401,7 @@ void SDIZO::AutomaticTests::treeTest()
 		<< ", average time: " << (std::accumulate(searchResults.begin(), searchResults.end(), 0) / searchResults.size()) << std::endl;
 	resultFile << "Tree: add, data range: 0 - " << maxDataSize << ", repeats: " << repeats
 		<< ", average time: " << (std::accumulate(addResults.begin(), addResults.end(), 0) / addResults.size()) << std::endl;
-	resultFile << "Tree: removeRoot, data range: 0 - " << maxDataSize << ", repeats: " << repeats
+	resultFile << "Tree: remove, data range: 0 - " << maxDataSize << ", repeats: " << repeats
 		<< ", average time: " << (std::accumulate(removeResults.begin(), removeResults.end(), 0) / removeResults.size()) << std::endl;
 
 	resultFile.close();

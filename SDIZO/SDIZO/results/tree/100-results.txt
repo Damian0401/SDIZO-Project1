@@ -1,3 +1,0 @@
-Tree: search, data range: 0 - 1000, repeats: 1000, average time: 126
-Tree: add, data range: 0 - 1000, repeats: 1000, average time: 600
-Tree: removeRoot, data range: 0 - 1000, repeats: 1000, average time: 206

@@ -1,0 +1,7 @@
+List: search, data range: 0 - 1000, repeats: 1000, average time: 2442
+List: addFront, data range: 0 - 1000, repeats: 1000, average time: 396
+List: removeFront, data range: 0 - 1000, repeats: 1000, average time: 520
+List: addBack, data range: 0 - 1000, repeats: 1000, average time: 381
+List: removeBack, data range: 0 - 1000, repeats: 1000, average time: 441
+List: addAt, data range: 0 - 1000, repeats: 1000, average time: 2907
+List: removeAt, data range: 0 - 1000, repeats: 1000, average time: 2994

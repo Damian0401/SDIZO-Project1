@@ -1,0 +1,7 @@
+Array: search, data range: 0 - 1000, repeats: 1000, average time: 2019
+Array: addFront, data range: 0 - 1000, repeats: 1000, average time: 21331
+Array: removeFront, data range: 0 - 1000, repeats: 1000, average time: 19370
+Array: addBack, data range: 0 - 1000, repeats: 1000, average time: 19869
+Array: removeBack, data range: 0 - 1000, repeats: 1000, average time: 19133
+Array: addAt, data range: 0 - 1000, repeats: 1000, average time: 19872
+Array: removeAt, data range: 0 - 1000, repeats: 1000, average time: 19306
